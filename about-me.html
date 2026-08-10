@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nama Anda — Portofolio</title>
+<!--
+  CARA MENGEDIT:
+  1. Ganti "Nama Anda", peran, dan tagline di bagian <section id="hero">
+  2. Ganti paragraf di <section id="about">
+  3. Tambah/ubah skill di <section id="skills"> (cari komentar SKILL ITEM)
+  4. Tambah/ubah proyek di <section id="work"> (cari komentar PROJECT CARD)
+  5. Ganti link kontak & sosmed di <section id="contact">
+  6. Ganti foto: cari <div class="avatar"> lalu ganti isinya dengan <img src="foto-anda.jpg">
+-->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root{
+    --paper: #FAFAF7;
+    --ink: #1C1B1F;
+    --ink-soft: #5C5A63;
+    --line: #E4E1DA;
+    --accent: #5A6B57;   /* muted sage green */
+    --accent-soft: #EDF0EA;
+    --mono: 'JetBrains Mono', monospace;
+    --serif: 'Fraunces', serif;
+    --sans: 'Work Sans', sans-serif;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background:var(--accent); color:var(--paper); }
+
+  a{ color:inherit; text-decoration:none; }
+
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- Side index nav ---------- */
+  .index-nav{
+    position:fixed;
+    left:28px;
+    top:50%;
+    transform:translateY(-50%);
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+    z-index:50;
+  }
+  .index-nav a{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.06em;
+    color:var(--ink-soft);
+    transition:color .25s ease;
+  }
+  .index-nav a .dot{
+    width:6px; height:6px;
+    border-radius:50%;
+    background:var(--line);
+    transition:all .3s ease;
+  }
+  .index-nav a .label{
+    opacity:0;
+    transform:translateX(-6px);
+    transition:all .25s ease;
+    white-space:nowrap;
+  }
+  .index-nav a:hover .label,
+  .index-nav a.active .label{ opacity:1; transform:translateX(0); }
+  .index-nav a.active{ color:var(--ink); }
+  .index-nav a.active .dot{ background:var(--accent); transform:scale(1.4); }
+
+  @media (max-width: 860px){ .index-nav{ display:none; } }
+
+  /* ---------- Hero ---------- */
+  #hero{
+    min-height:92vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding-top:80px;
+    padding-bottom:60px;
+    position:relative;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:22px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:28px; height:1px;
+    background:var(--accent);
+  }
+  h1.name{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(48px, 8vw, 92px);
+    line-height:1.02;
+    letter-spacing:-.01em;
+    max-width:820px;
+  }
+  h1.name em{ font-style:italic; font-weight:300; color:var(--accent); }
+  .role-line{
+    margin-top:24px;
+    font-size:19px;
+    color:var(--ink-soft);
+    max-width:520px;
+    font-weight:300;
+  }
+  .hero-meta{
+    margin-top:56px;
+    display:flex;
+    gap:48px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+  .hero-meta div span{ display:block; color:var(--ink); font-size:13px; margin-top:6px; }
+
+  /* ---------- Section shell ---------- */
+  section{ padding:120px 0; border-top:1px solid var(--line); }
+  #hero{ border-top:none; }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:56px;
+    gap:20px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(30px,4vw,40px);
+  }
+  .section-num{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- About ---------- */
+  .avatar{
+    width:120px; height:120px;
+    border-radius:50%;
+    background:linear-gradient(160deg, var(--accent-soft), var(--line));
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--serif);
+    font-size:40px;
+    color:var(--accent);
+    margin-bottom:36px;
+    border:1px solid var(--line);
+  }
+  .avatar img{ width:100%; height:100%; object-fit:cover; border-radius:50%; }
+
+  #about p{
+    font-size:18px;
+    max-width:620px;
+    color:var(--ink-soft);
+    font-weight:300;
+  }
+  #about p + p{ margin-top:18px; }
+  #about strong{ color:var(--ink); font-weight:500; }
+
+  /* ---------- Skills ---------- */
+  .skill-groups{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+    gap:40px;
+  }
+  .skill-group-title{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:18px;
+  }
+  .skill-list{ display:flex; flex-wrap:wrap; gap:10px; }
+  .skill-chip{
+    font-size:14px;
+    padding:8px 14px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    color:var(--ink-soft);
+    transition:all .2s ease;
+  }
+  .skill-chip:hover{
+    border-color:var(--accent);
+    color:var(--ink);
+    background:var(--accent-soft);
+  }
+
+  /* ---------- Work / Portfolio ---------- */
+  .project{
+    display:grid;
+    grid-template-columns:80px 1fr auto;
+    gap:24px;
+    align-items:start;
+    padding:32px 0;
+    border-bottom:1px solid var(--line);
+    transition:padding-left .25s ease;
+  }
+  .project:hover{ padding-left:8px; }
+  .project:last-child{ border-bottom:none; }
+  .project-index{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--ink-soft);
+    padding-top:4px;
+  }
+  .project-title{
+    font-family:var(--serif);
+    font-size:24px;
+    margin-bottom:8px;
+  }
+  .project-desc{
+    color:var(--ink-soft);
+    font-size:15px;
+    max-width:480px;
+    font-weight:300;
+  }
+  .project-tags{
+    margin-top:14px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .project-tags span{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.04em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    padding:4px 9px;
+    border-radius:4px;
+  }
+  .project-link{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--ink);
+    padding-top:6px;
+    white-space:nowrap;
+    border-bottom:1px solid var(--ink);
+    height:fit-content;
+  }
+  .project-link:hover{ color:var(--accent); border-color:var(--accent); }
+
+  @media (max-width: 600px){
+    .project{ grid-template-columns:1fr; gap:10px; }
+    .project-link{ border:none; }
+  }
+
+  /* ---------- Contact ---------- */
+  #contact{ padding-bottom:140px; }
+  .contact-lead{
+    font-family:var(--serif);
+    font-size:clamp(28px,5vw,44px);
+    max-width:640px;
+    margin-bottom:48px;
+    line-height:1.25;
+  }
+  .contact-lead a{
+    color:var(--accent);
+    border-bottom:1px solid var(--accent);
+  }
+  .contact-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .contact-links a{
+    font-family:var(--mono);
+    font-size:13px;
+    padding:12px 20px;
+    border:1px solid var(--line);
+    border-radius:24px;
+    color:var(--ink);
+    transition:all .2s ease;
+  }
+  .contact-links a:hover{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+  }
+
+  footer{
+    padding:36px 0;
+    border-top:1px solid var(--line);
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--ink-soft);
+    display:flex;
+    justify-content:space-between;
+  }
+
+  @media (max-width: 600px){
+    .wrap{ padding:0 22px; }
+    section{ padding:80px 0; }
+    .hero-meta{ flex-direction:column; gap:20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="index-nav" id="indexNav">
+  <a href="#hero" class="active"><span class="dot"></span><span class="label">Beranda</span></a>
+  <a href="#about"><span class="dot"></span><span class="label">Tentang</span></a>
+  <a href="#skills"><span class="dot"></span><span class="label">Keahlian</span></a>
+  <a href="#work"><span class="dot"></span><span class="label">Proyek</span></a>
+  <a href="#contact"><span class="dot"></span><span class="label">Kontak</span></a>
+</nav>
+
+<main class="wrap">
+
+  <!-- ================= HERO ================= -->
+  <section id="hero">
+    <div class="eyebrow">Portofolio Pribadi</div>
+    <h1 class="name">Nama Anda,<br><em>membangun hal-hal yang berguna.</em></h1>
+    <p class="role-line">Peran / Profesi Anda — deskripsikan singkat apa yang Anda kerjakan dan untuk siapa dalam satu kalimat.</p>
+    <div class="hero-meta">
+      <div>Lokasi<span>Kota, Negara</span></div>
+      <div>Fokus<span>Bidang keahlian utama</span></div>
+      <div>Tersedia untuk<span>Proyek / kolaborasi</span></div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section id="about">
+    <div class="section-head">
+      <h2>Tentang Saya</h2>
+      <span class="section-num">01</span>
+    </div>
+    <div class="avatar">
+      <!-- Ganti dengan <img src="foto-anda.jpg" alt="Nama Anda"> -->
+      NA
+    </div>
+    <p>Halo, saya <strong>Nama Anda</strong> — tuliskan cerita singkat tentang siapa Anda, latar belakang, dan apa yang membuat Anda tertarik pada bidang ini. Dua sampai tiga kalimat biasanya cukup.</p>
+    <p>Jelaskan pendekatan atau nilai kerja Anda: bagaimana Anda menyelesaikan masalah, apa yang Anda pedulikan dalam pekerjaan, dan pengalaman relevan yang ingin ditonjolkan.</p>
+  </section>
+
+  <!-- ================= SKILLS ================= -->
+  <section id="skills">
+    <div class="section-head">
+      <h2>Keahlian</h2>
+      <span class="section-num">02</span>
+    </div>
+    <div class="skill-groups">
+      <div>
+        <div class="skill-group-title">Teknis</div>
+        <div class="skill-list">
+          <!-- SKILL ITEM: ganti/tambah sesuai kebutuhan -->
+          <span class="skill-chip">Skill 1</span>
+          <span class="skill-chip">Skill 2</span>
+          <span class="skill-chip">Skill 3</span>
+          <span class="skill-chip">Skill 4</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-group-title">Perangkat & Tools</div>
+        <div class="skill-list">
+          <span class="skill-chip">Tool 1</span>
+          <span class="skill-chip">Tool 2</span>
+          <span class="skill-chip">Tool 3</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-group-title">Soft Skills</div>
+        <div class="skill-list">
+          <span class="skill-chip">Komunikasi</span>
+          <span class="skill-chip">Kerja Tim</span>
+          <span class="skill-chip">Manajemen Waktu</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WORK / PORTFOLIO ================= -->
+  <section id="work">
+    <div class="section-head">
+      <h2>Proyek Pilihan</h2>
+      <span class="section-num">03</span>
+    </div>
+
+    <!-- PROJECT CARD -->
+    <div class="project">
+      <div class="project-index">01</div>
+      <div>
+        <div class="project-title">Nama Proyek Satu</div>
+        <div class="project-desc">Deskripsi singkat tentang proyek ini: masalah yang diselesaikan dan peran Anda di dalamnya.</div>
+        <div class="project-tags"><span>Tag</span><span>Tag</span><span>Tag</span></div>
+      </div>
+      <a href="#" class="project-link">Lihat →</a>
+    </div>
+
+    <!-- PROJECT CARD -->
+    <div class="project">
+      <div class="project-index">02</div>
+      <div>
+        <div class="project-title">Nama Proyek Dua</div>
+        <div class="project-desc">Deskripsi singkat tentang proyek ini: masalah yang diselesaikan dan peran Anda di dalamnya.</div>
+        <div class="project-tags"><span>Tag</span><span>Tag</span></div>
+      </div>
+      <a href="#" class="project-link">Lihat →</a>
+    </div>
+
+    <!-- PROJECT CARD -->
+    <div class="project">
+      <div class="project-index">03</div>
+      <div>
+        <div class="project-title">Nama Proyek Tiga</div>
+        <div class="project-desc">Deskripsi singkat tentang proyek ini: masalah yang diselesaikan dan peran Anda di dalamnya.</div>
+        <div class="project-tags"><span>Tag</span><span>Tag</span><span>Tag</span></div>
+      </div>
+      <a href="#" class="project-link">Lihat →</a>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact">
+    <div class="section-head">
+      <h2>Kontak</h2>
+      <span class="section-num">04</span>
+    </div>
+    <p class="contact-lead">Punya proyek atau ide kolaborasi? Kirim email ke <a href="mailto:nama@email.com">nama@email.com</a> — saya akan balas secepatnya.</p>
+    <div class="contact-links">
+      <a href="mailto:nama@email.com">Email</a>
+      <a href="#" target="_blank">LinkedIn</a>
+      <a href="#" target="_blank">GitHub</a>
+      <a href="#" target="_blank">Instagram</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Nama Anda</span>
+    <span>Dibuat dengan perhatian pada detail</span>
+  </footer>
+
+</main>
+
+<script>
+  // Highlight active section in the side index nav
+  const links = document.querySelectorAll('.index-nav a');
+  const sections = document.querySelectorAll('main section');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.index-nav a[href="#${entry.target.id}"]`);
+        if(active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
